@@ -46,8 +46,8 @@ Asegúrate de tener instalados los siguientes programas antes de iniciar el proy
 2. **Crear un entorno virtual**:
 
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows usa: venv\Scripts\activate
+   python -m venv .venv
+   source venv/bin/activate  # En Windows escribe esto en powershell: venv\Scripts\activate
    ```
 
 3. **Instalar dependencias**:
@@ -62,14 +62,14 @@ Asegúrate de tener instalados los siguientes programas antes de iniciar el proy
 1. **Ejecutar el servidor**:
 
    ```bash
-   uvicorn app.main:app --reload
+   python -m app.main
    ```
 
 2. **Acceso a la API**:
 
    Una vez el servidor esté activo, puedes acceder al siguiente endpoint:
 
-   - **Swagger UI**: `http://127.0.0.1:8000/docs`
+   - **Swagger UI**: `http://127.0.0.1:5000/docs`
 
 3. **Endpoints importantes**:
 

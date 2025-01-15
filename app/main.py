@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import configure_mappers
@@ -31,6 +32,17 @@ app.include_router(books_router, prefix="/books", tags=["books"])
 app.include_router(sales_router, prefix="/sales", tags=["sales"])
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(users_router, prefix="/users", tags=["users"])
+
+
 @app.get("/")
 async def root():
     return {"message": "Bienvenido al gestor de inventario para librerias"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        app="app.main:app",
+        host="127.0.0.1",
+        port=5000,
+        reload=True,
+    )

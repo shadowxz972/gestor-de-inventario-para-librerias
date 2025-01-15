@@ -20,14 +20,17 @@ async def create_sale_route(sale: SaleCreate, db: Session = Depends(get_db), cur
 
 
 @router.get("/", response_model=List[SaleResponse])
-async def read_sales_route(db: Session = Depends(get_db), admin = Depends(get_current_admin_user), skip: int = 0, limit: int = 10):
+async def read_sales_route(db: Session = Depends(get_db), admin=Depends(get_current_admin_user), skip: int = 0,
+                           limit: int = 10):
     """
     Retorna las ventas en el intervalo skin:limit. Requiere permisos de administrador.
     """
     return read_sales(db=db, skip=skip, limit=limit)
 
+
 @router.get("/user", response_model=List[SaleResponse])
-async def read_user_sales_route(db: Session = Depends(get_db), user = Depends(get_current_user), skip: int = 0, limit: int = 10):
+async def read_user_sales_route(db: Session = Depends(get_db), user=Depends(get_current_user), skip: int = 0,
+                                limit: int = 10):
     """
     Retorna las ventas del usuario logueado.
     """
@@ -35,7 +38,7 @@ async def read_user_sales_route(db: Session = Depends(get_db), user = Depends(ge
 
 
 @router.delete("/{sale_id}", response_model=SaleResponse)
-async def delete_sale_route(sale_id: int, db: Session = Depends(get_db), admin = Depends(get_current_admin_user)):
+async def delete_sale_route(sale_id: int, db: Session = Depends(get_db), admin=Depends(get_current_admin_user)):
     """
     Borra logicamente una venta de la base de datos. Requiere permisos de administrador.
     """

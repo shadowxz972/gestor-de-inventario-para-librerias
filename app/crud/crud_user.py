@@ -1,10 +1,11 @@
+from typing import Optional
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.auth.functions import hash_password
 from app.models.User import User
 from app.schemas.User import UserCreate
-from typing import Optional
 
 
 def create_user(db: Session, data: UserCreate) -> User:
@@ -62,6 +63,7 @@ def create_admin_user(db: Session, data: UserCreate) -> User:
     db.commit()
     db.refresh(new_user)
     return new_user
+
 
 def get_user(db: Session, user_id: int, force_status: Optional[bool] = None, search_deleted: bool = False) -> User:
     """
@@ -148,7 +150,8 @@ def restore_user(db: Session, user_id: int) -> User:
     db.refresh(user)
     return user
 
-def change_password(db: Session, user_id:int, new_password:str):
+
+def change_password(db: Session, user_id: int, new_password: str):
     """
     Changes the password of a user in the database. This function retrieves the
     user by their user ID, hashes the new password, updates the user's password
@@ -168,7 +171,7 @@ def change_password(db: Session, user_id:int, new_password:str):
         refreshed in the database.
     :rtype: User
     """
-    user = get_user(db,user_id)
+    user = get_user(db, user_id)
     new_hashed_password = hash_password(new_password)
     user.hashed_password = new_hashed_password
     db.commit()

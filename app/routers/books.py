@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
 from app.auth.functions import get_current_admin_user, get_current_user
 from app.crud.crud_book import read_books, create_book, update_book, delete_book, get_book, restore_book
 from app.database.config import get_db
@@ -11,7 +12,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=BookResponse)
-async def create_book_route(book: BookCreate, db: Session = Depends(get_db), admin = Depends(get_current_admin_user)):
+async def create_book_route(book: BookCreate, db: Session = Depends(get_db), admin=Depends(get_current_admin_user)):
     """
     Crea un libro y lo añade a la base de datos. Requiere permisos de administrador.
     """
@@ -19,14 +20,16 @@ async def create_book_route(book: BookCreate, db: Session = Depends(get_db), adm
 
 
 @router.get("/", response_model=List[BookResponse])
-async def read_books_route(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), user = Depends(get_current_user)):
+async def read_books_route(skip: int = 0, limit: int = 10, db: Session = Depends(get_db),
+                           user=Depends(get_current_user)):
     """
     Retorna los libros en el intervalo skin:limit. Requiere permisos de usuario.
     """
     return read_books(db, skip=skip, limit=limit)
 
+
 @router.get("/{book_id}", response_model=BookResponse)
-async def read_book_route(book_id: int, db: Session = Depends(get_db), user = Depends(get_current_user)):
+async def read_book_route(book_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):
     """
     Retorna un libro por su id. Requiere permisos de usuario.
     """
@@ -34,7 +37,8 @@ async def read_book_route(book_id: int, db: Session = Depends(get_db), user = De
 
 
 @router.put("/", response_model=BookResponse)
-async def update_book_route(book_id: int, book: BookUpdate, db: Session = Depends(get_db), admin = Depends(get_current_admin_user)):
+async def update_book_route(book_id: int, book: BookUpdate, db: Session = Depends(get_db),
+                            admin=Depends(get_current_admin_user)):
     """
     Actualiza los datos de un libro. Requiere permisos de administrador.
     """
@@ -42,15 +46,16 @@ async def update_book_route(book_id: int, book: BookUpdate, db: Session = Depend
 
 
 @router.delete("/{book_id}", response_model=BookResponse)
-async def delete_book_route(book_id: int, db: Session = Depends(get_db), admin = Depends(get_current_admin_user)):
+async def delete_book_route(book_id: int, db: Session = Depends(get_db), admin=Depends(get_current_admin_user)):
     """
     Borra logicamente un libro de la base de datos. Requiere permisos de administrador.
     """
     return delete_book(book_id=book_id, db=db)
 
+
 @router.get("/restore/{book_id}", response_model=BookResponse)
-async def restore_book_route(book_id: int, db: Session = Depends(get_db), admin = Depends(get_current_admin_user)):
+async def restore_book_route(book_id: int, db: Session = Depends(get_db), admin=Depends(get_current_admin_user)):
     """
     Recupera logicamente a un libro de la base de datos. Requiere permisos de administrador.
     """
-    return restore_book(db,book_id)
+    return restore_book(db, book_id)

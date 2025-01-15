@@ -47,7 +47,6 @@ async def register_route(user_credentials: UserCreate, db: Session = Depends(get
     return create_user(db=db, data=user_credentials)
 
 
-
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """

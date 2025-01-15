@@ -7,6 +7,7 @@ from app.models.User import User
 from app.schemas.Sale import SaleCreate
 from app.validators.functions import validate_positive_int_numbers
 
+
 def fetch_sales(db: Session, filters: list, skip: int = 0, limit: int = 10):
     if not validate_positive_int_numbers(skip, limit):
         raise HTTPException(
@@ -111,6 +112,7 @@ def read_user_sales(db: Session, user_id: int, skip: int = 0, limit: int = 10):
     filters = [Sale.is_deleted == False, Sale.user_id == user_id]
     return fetch_sales(db, filters, skip, limit)
 
+
 def delete_sale(db: Session, sale_id: int):
     """
     Marks a sale record in the database as deleted by setting its `is_deleted` flag
@@ -142,6 +144,7 @@ def delete_sale(db: Session, sale_id: int):
     db.commit()
     db.refresh(sale)
     return sale
+
 
 def restore_sale():
     pass
