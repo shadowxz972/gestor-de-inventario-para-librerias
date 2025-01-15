@@ -47,7 +47,7 @@ Asegúrate de tener instalados los siguientes programas antes de iniciar el proy
 
    ```bash
    python -m venv .venv
-   source venv/bin/activate  # En Windows escribe esto en powershell: venv\Scripts\activate
+   source venv/bin/activate  # En Windows escribe esto en powershell: .venv\Scripts\activate
    ```
 
 3. **Instalar dependencias**:
